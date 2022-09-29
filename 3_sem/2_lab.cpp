@@ -27,17 +27,17 @@ public:
             throw "Figure is not valid";
     }
 
-    virtual double get_perimeter()
+    virtual double get_perimeter() const
     {
         return AB + BC + CA;
     }
 
-    virtual double get_area()
+    virtual double get_area() const
     {
         return abs((1 / 2.0) * (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y)));
     }
 
-    Point get_centroid()
+    Point get_centroid() const
     {
         return {(1 / 3.0) * (A.x + B.x + C.x), (1 / 3.0) * (A.y + B.y + C.y)};
     }
@@ -59,21 +59,27 @@ public:
             throw "Rectangle is not valid";
     }
 
-    double get_perimeter() override
+    double get_perimeter() const override
     {
         return AB + BC + CD + DA;
     }
 
-    double get_area() override
+    double get_area() const override
     {
         return AB * BC;
     }
 
-    Point get_centre()
+    Point get_centre() const
     {
         return {(1 / 4.0) * (A.x + B.x + C.x + D.x), (1 / 4.0) * (A.y + B.y + C.y + D.y)};
     }
 };
+
+ostream& operator<<(ostream& stream, const Point& other)
+{
+    stream << "(" << other.x << ", " << other.y << ")";
+    return stream;
+}
 
 int main()
 {
@@ -106,8 +112,7 @@ int main()
     try
     {
         Figure f1(points[0], points[1], points[2]);
-        cout << "The centroid of a figure in (" << f1.get_centroid().x << ", "
-             << f1.get_centroid().y << ")" << endl;
+        cout << "The centroid of a figure in " << f1.get_centroid() << endl;
         cout << "The area of a figure is " << f1.get_area() << endl;
         cout << "The perimeter of a figure is " << f1.get_perimeter() << endl;
     }
@@ -147,8 +152,7 @@ int main()
     try
     {
         Rectangle r1(points[0], points[1], points[2], points[3]);
-        cout << "The centre of a rectangle in (" << r1.get_centre().x << ", "
-             << r1.get_centre().y << ")" << endl;
+        cout << "The centre of a rectangle in " << r1.get_centre() << endl;
         cout << "The area of a rectangle is " << r1.get_area() << endl;
         cout << "The perimeter of a rectangle is " << r1.get_perimeter() << endl;
     }
